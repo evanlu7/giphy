@@ -5,10 +5,14 @@
 </head>
 <body>
 <div id="topics-view"> </div>
-<div id="gifs-appear-here">
+<div id="gifs">
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </script>
+
+
+
+
  <script type="text/javascript">
 var topics = ["Kanye West", "Jay-Z", "Nas"];
 function renderButtons () {
@@ -21,14 +25,43 @@ a.text(topics[i]);
 $("#topics-view").append(a);
 }
 }
+
+
 renderButtons();
 
+
 $("button").on("click", function() {
+var rapper = $(this).attr("data-name");
+
+   var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        rapper + "&api_key=dc6zaTOxFJmzC&limit=10";
+
+        $.ajax({
+        	url :queryURL,
+        	method: "GET"
+        })
 
 
+        .done(function(response) {
+
+        	var results = response.data;
+        	for (var i=0; i<results.length;i++) {
+        		var gifDiv =$("<div class='item'>");
+        		var rating = results[i].rating;
+        		var p = $("<p>").text("Rating: " + rating);
+        		var rapperImage = $("<img>");
+        		rapperImage.attr("src", results[i].images.fixed_height.url);
+        		gifDiv.append(p);
+        		gifDiv.append(rapperImage);
+
+        		$("#gifs").prepend(gifDiv);
 
 
-})
+        	}
+
+
+        	})
+    })
 
 
 

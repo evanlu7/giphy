@@ -4,35 +4,28 @@
 	 <meta charset="utf-8">
 </head>
 <body>
+
+<form>
+<input type="text" id="rapper-input">
+<input id="add-rapper" type="submit" value="Add Rapper">
+</form>	
+
 <div id="topics-view"> </div>
 <div id="gifs">
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 </script>
-
-
-
-
  <script type="text/javascript">
+
+
+
 var topics = ["Kanye West", "Jay-Z", "Nas"];
-function renderButtons () {
-for (var i =0; i < topics.length; i++) {
-var a = $("<button>");
-
-a.attr("data-name", topics[i]);
-a.text(topics[i]);
-
-$("#topics-view").append(a);
-}
-}
 
 
-renderButtons();
-
-
-$("button").on("click", function() {
+// $("button").on("click", function() 
+function displayRapperGif () {
 var rapper = $(this).attr("data-name");
-
    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         rapper + "&api_key=dc6zaTOxFJmzC&limit=10";
 
@@ -41,9 +34,7 @@ var rapper = $(this).attr("data-name");
         	method: "GET"
         })
 
-
         .done(function(response) {
-
         	var results = response.data;
         	for (var i=0; i<results.length;i++) {
         		var gifDiv =$("<div class='item'>");
@@ -55,18 +46,39 @@ var rapper = $(this).attr("data-name");
         		gifDiv.append(rapperImage);
 
         		$("#gifs").prepend(gifDiv);
-
-
         	}
-
-
         	})
-    })
+    }
 
 
 
 
+function renderButtons () {
+$("#topics-view").empty();
 
+for (var i =0; i < topics.length; i++) {
+var a = $("<button>");
+a.attr("data-name", topics[i]);
+a.text(topics[i]);
+a.addClass("rapperClass");
+$("#topics-view").append(a);
+}
+}
+
+
+$("#add-rapper").on("click", function (event){
+	event.preventDefault();
+var rapper = $("#rapper-input").val().trim();
+topics.push(rapper);
+renderButtons();
+	})
+
+
+$(document).on("click", ".rapperClass", displayRapperGif);
+
+
+//to render initial buttons
+renderButtons();
 
 </script>
 

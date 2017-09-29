@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title> Hip Hop Gifs </title>
 	 <meta charset="utf-8">
 </head>
 <body>
@@ -18,12 +19,8 @@
 </script>
  <script type="text/javascript">
 
+var topics = ["Kanye West", "Jay-Z", "Drake", "J. Cole", "Kendrick Lamar", "Future","Young Thug", "Cardi B", "Lil Uzi Vert", "Migos", "Kodak Black", "Playboi Carti", "Travis Scott", "The Weeknd", "21 Savage", "Ty Dolla Sign", "Rihanna", "Bryson Tiller", "DJ Khaled", "Rae Sremmurd", "Nicki Minaj", "Gucci Mane", "Vince Staples", "Dr. Dre", "Biggie", "Tupac", "DJ Quik", "Nas", "Eazy-E", "Q-Tip", "Andre 3000", "50 Cent", "Eminem", "Lil Wayne", "Lil Jon", "Ying Yang Twins", "Pharrell", "A Tribe Called Quest", "Lauryn Hill", "Aaliyah", "R. Kelly", "Puff Daddy", "Mase", "Usher", "Snoop Dogg", "Nate Dogg", "Mobb Deep", "Lil Kim", "Missy Elliott"];
 
-
-var topics = ["Kanye West", "Jay-Z", "Nas"];
-
-
-// $("button").on("click", function() 
 function displayRapperGif () {
 var rapper = $(this).attr("data-name");
    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -42,6 +39,10 @@ var rapper = $(this).attr("data-name");
         		var p = $("<p>").text("Rating: " + rating);
         		var rapperImage = $("<img>");
         		rapperImage.attr("src", results[i].images.fixed_height.url);
+                rapperImage.attr("data-still");
+                rapperImage.attr("data-animate");
+                rapperImage.attr("data-state", "still");
+                rapperImage.addClass("gif");
         		gifDiv.append(p);
         		gifDiv.append(rapperImage);
 
@@ -49,8 +50,6 @@ var rapper = $(this).attr("data-name");
         	}
         	})
     }
-
-
 
 
 function renderButtons () {
@@ -73,8 +72,31 @@ topics.push(rapper);
 renderButtons();
 	})
 
-
 $(document).on("click", ".rapperClass", displayRapperGif);
+
+
+
+
+//what I got for the pause function..
+//the key issue I had is finding the source for still and animate.
+
+// $(".gif").on("click", function (){
+// data-still= (source) + _s
+// data-animate = (source)
+
+
+// })
+
+// var state=$(this).attr("data-state");
+//     if (state === "still") {
+//         $(this).attr("src", $(this).attr("data-animate"));
+//         $(this).attr("data-state," "animate");
+// } else {
+//     $(this).attr("src", $(this).attr("data-still"));
+//     $(this).attr("data-state", "still");
+
+// }
+
 
 
 //to render initial buttons
